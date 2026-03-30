@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'DM sans';
+    src: url('../fonts/DM sans/DMSans-VariableFont_opsz\,wght.ttf');
+    font-weight: normal;
+    font-display: swap;
+}
+
+header{
+    background-color: white;
+}
+
+body{
+    background-color: #F9FAFC;
+}
+
+div{
+    display: inline-block;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+nav{
+    display: inline-block;
+}
+
+ul{
+    display: inline-block;
+} 
+
+li{
+    display: inline-block;
+}
+
+input{
+    width: 50px;
+}
+
+.button{
+    font-family: 'DM sans', sans-serif;
+    font-size: 14px;
+    color: white;
+    border:  20px solid #B8C2CE;
+    border-radius: 6px;
+    gap: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.text_button{
+    font-family: 'DM sans', sans-serif;
+    font-weight: 400;
+    padding: 15px 30px;
+    text-decoration: none;
+}
+
+.active{
+    font-family: 'DM sans', sans-serif;
+    font-weight: 700;
+    padding: 15px 30px;
+    text-decoration: none;
+
+}
