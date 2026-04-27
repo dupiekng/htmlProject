@@ -3,6 +3,11 @@
     src: url('../fonts/DM sans/DMSans-VariableFont_opsz\,wght.ttf');
     font-weight: normal;
     font-display: swap;
+
+    font-family: 'Sequel Sans';
+    src: url('../fonts/Sequel Sans/SequelSansVFHead.eot');
+    font-weight: normal;
+    font-display: swap;
 }
 
 header{
@@ -35,6 +40,32 @@ input{
     width: 50px;
 }
 
+p{
+    font-family: 'DM sans', sans-serif;
+    font-size: 14px;
+    position: absolute;
+    top: 58%;
+    left: 34%;
+
+
+}
+
+ .custom-btn {
+    font-family: 'DM sans', sans-serif;
+    background-color: #000000;
+    color: white;
+    padding: 18px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+    top: 66%;
+    left: 36%;
+  }
+  .custom-btn:hover {
+    background-color: #000000;
+  }
+
 .button{
     font-family: 'DM sans', sans-serif;
     font-size: 14px;
@@ -60,4 +91,28 @@ input{
     padding: 15px 30px;
     text-decoration: none;
 
+}
+.image-text-container {
+  position: relative;
+  display: inline-block;
+}
+
+.text-overlay {
+  position: absolute;
+  top: 35%;
+  left: 42%;
+  line-height: 100%;
+  width: 70%;
+  color: transparent;
+  background-clip: text;
+  background-image: linear-gradient(to bottom, #262626, #B8C2CE);
+  transform: translate(-50%, -50%);
+  font-family: 'Sequel Sans', sans-serif;
+  font-size: 64px;
+  font-weight: 900;
+}
+
+.basketball-player{
+    position: absolute;
+    left: 14%;
 }
