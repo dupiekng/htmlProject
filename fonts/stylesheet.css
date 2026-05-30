@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Sequel Sans VF Body';
+    src: url('SequelSansVFBody.eot');
+    src: local('Sequel Sans VF Body'), local('SequelSansVFBody'),
+        url('SequelSansVFBody.eot?#iefix') format('embedded-opentype'),
+        url('SequelSansVFBody.woff2') format('woff2'),
+        url('SequelSansVFBody.woff') format('woff'),
+        url('SequelSansVFBody.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sequel Sans VF Head';
+    src: url('SequelSansVFHead.eot');
+    src: local('Sequel Sans VF Head'), local('SequelSansVFHead'),
+        url('SequelSansVFHead.eot?#iefix') format('embedded-opentype'),
+        url('SequelSansVFHead.woff2') format('woff2'),
+        url('SequelSansVFHead.woff') format('woff'),
+        url('SequelSansVFHead.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sequel Sans VF Display';
+    src: url('SequelSansVFDispIt.eot');
+    src: local('Sequel Sans VF Display Italic'), local('SequelSansVFDispIt'),
+        url('SequelSansVFDispIt.eot?#iefix') format('embedded-opentype'),
+        url('SequelSansVFDispIt.woff2') format('woff2'),
+        url('SequelSansVFDispIt.woff') format('woff'),
+        url('SequelSansVFDispIt.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sequel Sans VF Display';
+    src: url('SequelSansVFDisp.eot');
+    src: local('Sequel Sans VF Display'), local('SequelSansVFDisp'),
+        url('SequelSansVFDisp.eot?#iefix') format('embedded-opentype'),
+        url('SequelSansVFDisp.woff2') format('woff2'),
+        url('SequelSansVFDisp.woff') format('woff'),
+        url('SequelSansVFDisp.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sequel Sans VF Head';
+    src: url('SequelSansVFHeadIt.eot');
+    src: local('Sequel Sans VF Head Italic'), local('SequelSansVFHeadIt'),
+        url('SequelSansVFHeadIt.eot?#iefix') format('embedded-opentype'),
+        url('SequelSansVFHeadIt.woff2') format('woff2'),
+        url('SequelSansVFHeadIt.woff') format('woff'),
+        url('SequelSansVFHeadIt.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sequel Sans VF Body';
+    src: url('SequelSansVFBodyIt.eot');
+    src: local('Sequel Sans VF Body Italic'), local('SequelSansVFBodyIt'),
+        url('SequelSansVFBodyIt.eot?#iefix') format('embedded-opentype'),
+        url('SequelSansVFBodyIt.woff2') format('woff2'),
+        url('SequelSansVFBodyIt.woff') format('woff'),
+        url('SequelSansVFBodyIt.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
