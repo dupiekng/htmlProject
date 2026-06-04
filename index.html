@@ -6,14 +6,50 @@
   <title>Sport News</title>
   <link rel="stylesheet" href="styles/style.css" />
 </head>
-
 <body>
+
+  <div class="search-modal" id="searchModal" role="dialog" aria-modal="true" aria-label="Search">
+    <div class="search-modal__backdrop" id="searchBackdrop"></div>
+    <div class="search-modal__box">
+      <div class="search-modal__header">
+        <span class="search-modal__label">Search Sport News</span>
+        <button class="search-modal__close" id="searchClose" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M2 2l14 14M16 2L2 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="search-modal__input-wrap">
+        <svg class="search-modal__icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 12l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input type="text" class="search-modal__input" id="searchModalInput" placeholder="Search articles, categories…" autocomplete="off" />
+        <button class="search-modal__clear" id="searchClear" aria-label="Clear">
+          <svg width="14" height="14" viewBox="0 0 14 14"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="search-modal__suggestions">
+        <p class="search-modal__hint">Popular:</p>
+        <div class="search-modal__tags">
+          <span class="search-modal__tag">Football</span>
+          <span class="search-modal__tag">Basketball</span>
+          <span class="search-modal__tag">Cycling</span>
+          <span class="search-modal__tag">IndyCar</span>
+          <span class="search-modal__tag">Taekwondo</span>
+        </div>
+      </div>
+      <div class="search-modal__results" id="searchResults"></div>
+    </div>
+  </div>
+
   <header class="header">
     <div class="header__inner">
       <a href="#" class="logo">
         <img src="images/Sport News.svg" alt="Sport News" class="logo__img" />
       </a>
-      <nav class="nav">
+      <button class="nav-burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="mainNav">
         <ul class="nav__list">
           <li class="nav__item"><a href="#" class="nav__link nav__link--active">Home</a></li>
           <li class="nav__item"><a href="#category" class="nav__link">Category</a></li>
@@ -23,25 +59,29 @@
           <li class="nav__item"><a href="#articles" class="nav__link">Sports Article</a></li>
         </ul>
       </nav>
-      <div class="search-box">
-        <img src="images/search.svg" alt="search" class="search-box__icon" />
-        <input type="text" placeholder="Search" class="search-box__input" />
+      <div class="search-box" id="searchBox">
+        <input type="text" placeholder="Search" class="search-box__input" id="headerSearchInput" readonly />
+        </button>
       </div>
     </div>
   </header>
 
   <main>
+
     <section class="hero">
       <div class="hero__inner">
+        <div class="hero__ball-bg"></div>
+
         <div class="hero__content">
-          <div class="hero__ball-bg"></div>
-          <h1 class="hero__title">TOP<br>SCORER TO<br>THE FINAL<br>MATCH</h1>
+          <p class="hero__title">TOP SCORER TO THE FINAL MATCH</p>
           <p class="hero__desc">The EuroLeague Finals Top Scorer is the individual award for the player that gained the highest points in the EuroLeague Finals</p>
           <a href="#" class="btn btn--dark">CONTINUE READING</a>
         </div>
+
         <div class="hero__player">
           <img src="images/basketball-player-action-sunset 1.png" alt="Basketball player" class="hero__player-img" />
         </div>
+
         <aside class="hero__sidebar">
           <span class="sidebar__label">Today</span>
           <div class="sidebar__card">
@@ -66,27 +106,29 @@
       <div class="container">
         <h2 class="section-title">Category</h2>
         <div class="category__grid">
-          <div class="category__item">
+          <div class="category__item cat-photo">
             <img src="images/football-goal.jpg" alt="Football" class="category__bg" />
-            <span class="category__label">FOOTBALL</span>
           </div>
-          <div class="category__item">
+            <div class="category__item cat-text">
+              <span class="category__label">FOOTBALL</span>
+          </div>
+          <div class="category__item cat-photo">
             <img src="images/basketball.jpg" alt="Basketball" class="category__bg" />
           </div>
-          <div class="category__item">
+          <div class="category__item cat-text">
             <span class="category__label">CAR SPORT</span>
           </div>
-          <div class="category__item">
-            <img src="images/badminton.jpg" alt="Table Tennis" class="category__bg" />
+          <div class="category__item cat-photo cat-photo--dark">
+            <img src="images/red-ping-pong-racket-sports-equipment 1.jpg" alt="Table Tennis" class="category__bg" />
           </div>
-          <div class="category__item">
-            <span class="category__label">BASCKET<br>BALL</span>
+          <div class="category__item cat-text">
+            <span class="category__label">BASKET<br>BALL</span>
           </div>
-          <div class="category__item">
+          <div class="category__item cat-photo">
             <img src="images/drift.jpg" alt="Car Sport" class="category__bg" />
           </div>
-          <div class="category__item">
-            <span class="category__label">TABLE<br>TENNIS</span>
+          <div class="category__item cat-text">
+            <span class="category__label cat-label">TABLE<br>TENNIS</span>
           </div>
         </div>
       </div>
@@ -191,7 +233,6 @@
 
     <section class="recent-ranking" id="recent">
       <div class="container recent-ranking__inner">
-
         <div class="recent" id="ranking">
           <h2 class="section-title">Recent News</h2>
           <div class="recent__grid">
@@ -207,79 +248,43 @@
                 <img src="images/martial-arts-helmet.jpg" alt="Taekwondo" class="recent__item-img" />
                 <div class="recent__item-body">
                   <span class="recent__item-tag">#Tailor_07 · 12 July 2023</span>
-                  <h4 class="recent__item-title">Baku 2023 Taekwondo Championships</h4>
+                  <h4 class="recent__item-title">Baku 2023 Taekwondo<br>Championships</h4>
                 </div>
               </article>
               <article class="recent__item">
                 <img src="images/golf.jpg" alt="Golf" class="recent__item-img" />
                 <div class="recent__item-body">
                   <span class="recent__item-tag">#Golf_Toni · 20 July 2023</span>
-                  <h4 class="recent__item-title">Open Championship Royal Liverpool Golf</h4>
+                  <h4 class="recent__item-title">Open Championship<br>Royal Liverpool Golf</h4>
                 </div>
               </article>
               <article class="recent__item">
                 <img src="images/cricket.jpg" alt="Cricket" class="recent__item-img" />
                 <div class="recent__item-body">
                   <span class="recent__item-tag">#Cricket_Toni · 27 July 2023</span>
-                  <h4 class="recent__item-title">Ireland Tour of England Test 2023</h4>
+                  <h4 class="recent__item-title">Ireland Tour of England<br>Test 2023</h4>
                 </div>
               </article>
               <a href="#" class="btn btn--outline">More →</a>
             </div>
           </div>
         </div>
-
         <div class="ranking">
           <h2 class="section-title">Clubs Ranking</h2>
           <table class="ranking__table">
             <thead>
-              <tr>
-                <th></th>
-                <th>Club</th>
-                <th>GP</th>
-                <th>W</th>
-                <th>D</th>
-                <th>L</th>
-                <th>F</th>
-                <th>A</th>
-                <th>GD</th>
-              </tr>
+              <tr><th></th><th>Club</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>F</th><th>A</th><th>GD</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td class="ranking__club"><img src="images/logo-mancity.png" alt="Man City" />Manchester City</td>
-                <td>38</td><td>29</td><td>6</td><td>3</td><td>99</td><td>26</td><td>73</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td class="ranking__club"><img src="images/logo-liverpool.png" alt="Liverpool" />Liverpool</td>
-                <td>38</td><td>28</td><td>8</td><td>2</td><td>94</td><td>26</td><td>68</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td class="ranking__club"><img src="images/logo-chelsea.png" alt="Chelsea" />Chelsea</td>
-                <td>38</td><td>21</td><td>11</td><td>6</td><td>76</td><td>33</td><td>43</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td class="ranking__club"><img src="images/logo-tottenham.png" alt="Tottenham" />Tottenham Hotspur</td>
-                <td>38</td><td>22</td><td>5</td><td>11</td><td>69</td><td>40</td><td>29</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td class="ranking__club"><img src="images/logo-arsenal.png" alt="Arsenal" />Arsenal</td>
-                <td>38</td><td>22</td><td>3</td><td>13</td><td>61</td><td>48</td><td>13</td>
-              </tr>
-              <tr>
-                <td>6</td>
-                <td class="ranking__club"><img src="images/logo-manunited.png" alt="Man United" />Manchester United</td>
-                <td>38</td><td>16</td><td>10</td><td>12</td><td>57</td><td>57</td><td>0</td>
-              </tr>
+              <tr><td>1</td><td class="ranking__club"><img src="images/logo-mancity.png" alt="Man City"/>Manchester City</td><td>38</td><td>29</td><td>6</td><td>3</td><td>99</td><td>26</td><td>73</td></tr>
+              <tr><td>2</td><td class="ranking__club"><img src="images/logo-liverpool.png" alt="Liverpool"/>Liverpool</td><td>38</td><td>28</td><td>8</td><td>2</td><td>94</td><td>26</td><td>68</td></tr>
+              <tr><td>3</td><td class="ranking__club"><img src="images/logo-chelsea.png" alt="Chelsea"/>Chelsea</td><td>38</td><td>21</td><td>11</td><td>6</td><td>76</td><td>33</td><td>43</td></tr>
+              <tr><td>4</td><td class="ranking__club"><img src="images/logo-tottenham.png" alt="Tottenham"/>Tottenham Hotspur</td><td>38</td><td>22</td><td>5</td><td>11</td><td>69</td><td>40</td><td>29</td></tr>
+              <tr><td>5</td><td class="ranking__club"><img src="images/logo-arsenal.png" alt="Arsenal"/>Arsenal</td><td>38</td><td>22</td><td>3</td><td>13</td><td>61</td><td>48</td><td>13</td></tr>
+              <tr><td>6</td><td class="ranking__club"><img src="images/logo-manunited.png" alt="Man United"/>Manchester United</td><td>38</td><td>16</td><td>10</td><td>12</td><td>57</td><td>57</td><td>0</td></tr>
             </tbody>
           </table>
         </div>
-
       </div>
     </section>
 
@@ -366,15 +371,9 @@
   <footer class="footer">
     <div class="container footer__inner">
       <div class="footer__socials">
-        <a href="#" class="footer__social-link" aria-label="Facebook">
-          <img src="images/fb-icon.png" alt="Facebook" />
-        </a>
-        <a href="#" class="footer__social-link" aria-label="Instagram">
-          <img src="images/instagram-icon.svg" alt="Instagram" />
-        </a>
-        <a href="#" class="footer__social-link" aria-label="Twitter">
-          <img src="images/twitter-icon.png" alt="Twitter" />
-        </a>
+        <a href="#" class="footer__social-link" aria-label="Facebook"><img src="images/fb-icon.png" alt="Facebook" /></a>
+        <a href="#" class="footer__social-link" aria-label="Instagram"><img src="images/inst.png" alt="Instagram" /></a>
+        <a href="#" class="footer__social-link" aria-label="Twitter"><img src="images/twitter-icon.png" alt="Twitter" /></a>
       </div>
       <div class="footer__pagination">
         <button class="slider-btn slider-btn--prev" id="footerPrev" aria-label="Previous">
