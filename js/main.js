@@ -1,237 +1,211 @@
-const siteData = {
-  slider: {
-    current: 0,
-    total: 4,
-    autoplayInterval: null,
-    autoplayDelay: 5000
-  },
-  articles: {
-    current: 0,
-    perPage: 3
-  }
-};
+const searchData = [
+  { label:'6-Year-Old Horse Dies at Belmont Park', cat:'Race' },
+  { label:'Savilia Blunk Embraces Longer Season', cat:'Cycling' },
+  { label:'Ryan Garcia fighting on social media', cat:'Boxing' },
+  { label:'Ethiopian runners took the top four spots', cat:'Athletics' },
+  { label:'IndyCar Detroit: Dixon quickest in second practice', cat:'IndyCar' },
+  { label:'Lionel Messi Leaving Paris Saint-Germain', cat:'Football' },
+  { label:'NBA Finals: Heat take Game 1 in overtime', cat:'Basketball' },
+  { label:'Baku 2023 World Taekwondo Championships', cat:'Taekwondo' },
+  { label:'Open Championship Royal Liverpool Golf', cat:'Golf' },
+  { label:'Ireland Tour of England Test 2023', cat:'Cricket' },
+  { label:'Golden Knights out to fulfill owner\'s quest', cat:'Hockey' },
+  { label:'Outdoor Badminton Gets Support From Federation', cat:'Badminton' },
+];
 
-/**
- * @param {Function} fn
- * @param {number} delay
- */
-function throttle(fn, delay) {
+const sliderState = { current:0, total:4, timer:null, delay:5000 };
+
+function throttle(fn, ms) {
   let last = 0;
-  return function (...args) {
-    const now = Date.now();
-    if (now - last >= delay) {
-      last = now;
-      fn.apply(this, args);
-    }
-  };
+  return (...args) => { const now = Date.now(); if (now - last >= ms) { last = now; fn(...args); } };
 }
 
-/**
- * @param {Element} el
- * @param {string} cls
- */
-function animateClass(el, cls) {
-  el.classList.remove(cls);
-  void el.offsetWidth; // reflow
-  el.classList.add(cls);
-}
-
-
-function initFeaturedSlider() {
+function initSlider() {
   const slides = document.querySelectorAll('.featured-slide');
-  const dots = document.querySelectorAll('.slider-controls .slider-dot');
-  const prevBtn = document.getElementById('featuredPrev');
-  const nextBtn = document.getElementById('featuredNext');
-
+  const dots   = document.querySelectorAll('.slider-controls .slider-dot');
+  const prev   = document.getElementById('featuredPrev');
+  const next   = document.getElementById('featuredNext');
   if (!slides.length) return;
 
-  function goToSlide(index) {
-    slides[siteData.slider.current].classList.remove('active');
-    dots[siteData.slider.current].classList.remove('active');
-
-    siteData.slider.current = (index + siteData.slider.total) % siteData.slider.total;
-
-    slides[siteData.slider.current].classList.add('active');
-    dots[siteData.slider.current].classList.add('active');
+  function go(idx) {
+    slides[sliderState.current].classList.remove('active');
+    dots[sliderState.current].classList.remove('active');
+    sliderState.current = (idx + sliderState.total) % sliderState.total;
+    slides[sliderState.current].classList.add('active');
+    dots[sliderState.current].classList.add('active');
   }
+  function reset() { clearInterval(sliderState.timer); sliderState.timer = setInterval(() => go(sliderState.current + 1), sliderState.delay); }
 
-  function next() { goToSlide(siteData.slider.current + 1); }
-  function prev() { goToSlide(siteData.slider.current - 1); }
-
-  nextBtn && nextBtn.addEventListener('click', () => { next(); resetAutoplay(); });
-  prevBtn && prevBtn.addEventListener('click', () => { prev(); resetAutoplay(); });
-
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => { goToSlide(i); resetAutoplay(); });
-  });
-
-  function startAutoplay() {
-    siteData.slider.autoplayInterval = setInterval(next, siteData.slider.autoplayDelay);
-  }
-
-  function resetAutoplay() {
-    clearInterval(siteData.slider.autoplayInterval);
-    startAutoplay();
-  }
-
-  startAutoplay();
+  next?.addEventListener('click', () => { go(sliderState.current + 1); reset(); });
+  prev?.addEventListener('click', () => { go(sliderState.current - 1); reset(); });
+  dots.forEach((d, i) => d.addEventListener('click', () => { go(i); reset(); }));
+  reset();
 }
 
-function initArticlesPagination() {
-  const prevBtn = document.getElementById('articlesPrev');
-  const nextBtn = document.getElementById('articlesNext');
+function initArticles() {
+  const prev = document.getElementById('articlesPrev');
+  const next = document.getElementById('articlesNext');
   const cards = document.querySelectorAll('.article-card');
-
-  if (!prevBtn || !nextBtn || !cards.length) return;
-
-  function animateCards() {
-    cards.forEach((card, i) => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(16px)';
-      setTimeout(() => {
-        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      }, i * 60);
+  function animate() {
+    cards.forEach((c, i) => {
+      c.style.opacity = '0'; c.style.transform = 'translateY(14px)';
+      setTimeout(() => { c.style.transition = 'opacity .3s ease, transform .3s ease'; c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 60);
     });
   }
-
-  prevBtn.addEventListener('click', animateCards);
-  nextBtn.addEventListener('click', animateCards);
+  prev?.addEventListener('click', animate);
+  next?.addEventListener('click', animate);
 }
 
-
-function initSearch() {
-  const input = document.querySelector('.search-box__input');
-  if (!input) return;
-
-  input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-      const query = this.value.trim();
-      if (query) {
-        // In a real project, this would navigate to search results
-        console.log('Searching for:', query);
-        this.value = '';
-        this.blur();
-      }
-    }
-  });
+function initFooter() {
+  const prev = document.getElementById('footerPrev');
+  const next = document.getElementById('footerNext');
+  const dots = document.querySelectorAll('.footer__pagination .slider-dot');
+  let cur = 0;
+  function go(i) { dots[cur].classList.remove('active'); cur = (i + dots.length) % dots.length; dots[cur].classList.add('active'); }
+  prev?.addEventListener('click', () => go(cur - 1));
+  next?.addEventListener('click', () => go(cur + 1));
+  dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
 }
 
 function initNewsletter() {
-  const btn = document.querySelector('.newsletter__btn');
+  const btn   = document.querySelector('.newsletter__btn');
   const input = document.querySelector('.newsletter__input');
   if (!btn || !input) return;
-
-  btn.addEventListener('click', function () {
+  btn.addEventListener('click', () => {
     const email = input.value.trim();
     if (!email || !email.includes('@')) {
-      shakeElement(input);
+      input.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}], {duration:300});
       return;
     }
     input.value = '';
-    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-    </svg>`;
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
     btn.style.background = '#2d9b5a';
     setTimeout(() => {
-      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>`;
+      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
       btn.style.background = '';
     }, 3000);
   });
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') btn.click(); });
+}
 
-  input.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') btn.click();
+function initSearch() {
+  const modal      = document.getElementById('searchModal');
+  const backdrop   = document.getElementById('searchBackdrop');
+  const closeBtn   = document.getElementById('searchClose');
+  const openBtn    = document.getElementById('openSearch');
+  const headerInput = document.getElementById('headerSearchInput');
+  const modalInput = document.getElementById('searchModalInput');
+  const clearBtn   = document.getElementById('searchClear');
+  const results    = document.getElementById('searchResults');
+  const tags       = document.querySelectorAll('.search-modal__tag');
+  if (!modal) return;
+
+  function open() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => modalInput.focus(), 100);
+  }
+  function close() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    modalInput.value = '';
+    results.innerHTML = '';
+  }
+
+  openBtn?.addEventListener('click', open);
+  headerInput?.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+
+  function renderResults(query) {
+    const q = query.trim().toLowerCase();
+    results.innerHTML = '';
+    if (!q) return;
+    const filtered = searchData.filter(item => item.label.toLowerCase().includes(q) || item.cat.toLowerCase().includes(q));
+    if (!filtered.length) {
+      results.innerHTML = `<p style="padding:16px 20px;color:#aaa;font-size:13px">No results for "${query}"</p>`;
+      return;
+    }
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'search-result-item';
+      div.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;color:#ccc">
+          <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10.5 10.5l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div><div class="search-result-item__label">${item.label}</div><div class="search-result-item__cat">${item.cat}</div></div>`;
+      div.addEventListener('click', () => close());
+      results.appendChild(div);
+    });
+  }
+
+  modalInput.addEventListener('input', function() {
+    clearBtn.style.opacity = this.value ? '1' : '0';
+    renderResults(this.value);
+  });
+  clearBtn.style.opacity = '0';
+  clearBtn.addEventListener('click', () => { modalInput.value = ''; results.innerHTML = ''; clearBtn.style.opacity = '0'; modalInput.focus(); });
+
+  tags.forEach(tag => {
+    tag.addEventListener('click', () => {
+      modalInput.value = tag.textContent;
+      clearBtn.style.opacity = '1';
+      renderResults(tag.textContent);
+    });
   });
 }
 
-/**
- * @param {Element} el
- */
-function shakeElement(el) {
-  el.style.transition = 'none';
-  const keyframes = [
-    { transform: 'translateX(0)' },
-    { transform: 'translateX(-6px)' },
-    { transform: 'translateX(6px)' },
-    { transform: 'translateX(-4px)' },
-    { transform: 'translateX(4px)' },
-    { transform: 'translateX(0)' }
-  ];
-  el.animate(keyframes, { duration: 350, easing: 'ease-in-out' });
+function initBurger() {
+  const burger = document.getElementById('navBurger');
+  const nav    = document.getElementById('mainNav');
+  if (!burger || !nav) return;
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    nav.classList.toggle('open');
+  });
+  document.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', () => { burger.classList.remove('open'); nav.classList.remove('open'); });
+  });
 }
 
 function initScrollSpy() {
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav__link');
-
+  const links    = document.querySelectorAll('.nav__link');
   const onScroll = throttle(() => {
-    let current = '';
-    sections.forEach(section => {
-      const top = section.getBoundingClientRect().top;
-      if (top <= 80) current = section.id;
-    });
-    navLinks.forEach(link => {
-      link.classList.remove('nav__link--active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('nav__link--active');
-      }
+    let cur = '';
+    sections.forEach(s => { if (s.getBoundingClientRect().top <= 80) cur = s.id; });
+    links.forEach(l => {
+      l.classList.remove('nav__link--active');
+      if (l.getAttribute('href') === `#${cur}`) l.classList.add('nav__link--active');
     });
   }, 100);
-
   window.addEventListener('scroll', onScroll);
 }
 
-function initScrollReveal() {
-  const targets = document.querySelectorAll(
-    '.trending__item, .article-card, .sidebar__card, .recent__item, .ranking__table tbody tr'
-  );
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
+function initReveal() {
+  const els = document.querySelectorAll('.trending__item,.article-card,.sidebar__card,.recent__item,.ranking__table tbody tr');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; obs.unobserve(e.target); }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  targets.forEach((el, i) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = `opacity 0.4s ease ${i * 0.04}s, transform 0.4s ease ${i * 0.04}s`;
-    observer.observe(el);
+  }, { threshold:.1, rootMargin:'0px 0px -30px 0px' });
+  els.forEach((el, i) => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(18px)';
+    el.style.transition = `opacity .4s ease ${i * .04}s, transform .4s ease ${i * .04}s`;
+    obs.observe(el);
   });
 }
 
-function initFooterPagination() {
-  const prev = document.getElementById('footerPrev');
-  const next = document.getElementById('footerNext');
-  const dots = document.querySelectorAll('.footer__pagination .slider-dot');
-  let current = 0;
-
-  function go(index) {
-    dots[current].classList.remove('active');
-    current = (index + dots.length) % dots.length;
-    dots[current].classList.add('active');
-  }
-
-  prev && prev.addEventListener('click', () => go(current - 1));
-  next && next.addEventListener('click', () => go(current + 1));
-  dots.forEach((d, i) => d.addEventListener('click', () => go(i)));
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-  initFeaturedSlider();
-  initArticlesPagination();
-  initSearch();
+document.addEventListener('DOMContentLoaded', () => {
+  initSlider();
+  initArticles();
+  initFooter();
   initNewsletter();
+  initSearch();
+  initBurger();
   initScrollSpy();
-  initScrollReveal();
-  initFooterPagination();
-
-  console.log('Sport News initialised ✓');
+  initReveal();
 });
