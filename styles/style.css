@@ -342,8 +342,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 @media(max-width:1024px){
   :root{--container:100%}
   .hero__title{font-size:64px;letter-spacing:-1px}
-  .hero__player{flex:0 0 340px}
-  .hero__player-img{height:420px}
+  .hero__player{flex:0 0 340px; width: 50%;}
+  .hero__player-img{height:420px; top: 0px}
+  .hero__content{margin-top: 0px;}
   .hero__ball-bg{width:320px;height:320px;left:20px}
   .hero__content{flex:0 0 210px}
   .ranking{flex:0 0 300px}
@@ -354,9 +355,9 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
 }
 
 @media(max-width:768px){
-  .nav-burger{display:flex}
+ .nav-burger{display:flex}
   .nav{
-    position:fixed;top:60px;left:0;right:0;
+    position:fixed;top:10px;left:0;right:0;
     background:var(--color-white);
     border-bottom:1px solid var(--color-gray-light);
     padding:16px 24px 20px;
@@ -368,11 +369,12 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   .nav__list{flex-direction:column;align-items:flex-start;gap:16px}
   .nav__link{font-size:16px}
   .search-box{display:none}
+  .hero__sidebar{margin-left: 1px;}
 
   .hero__inner{flex-direction:column;align-items:center;min-height:auto;padding:32px 20px 0;gap:0}
   .hero__ball-bg{width:280px;height:280px;top:20px;left:50%;transform:translateX(-50%)}
-  .hero__player{flex:none;order:1;width:100%;max-width:320px}
-  .hero__player-img{height:340px;width:100%;object-fit:contain}
+  .hero__player{flex:none;order:1;width:100%;max-width:320px; margin-right: 75px;}
+  .hero__player-img{height:280px;top: 0px}
   .hero__content{flex:none;order:2;width:100%;padding:24px 0 32px;text-align:center}
   .hero__title{font-size:52px;letter-spacing:-1px;line-height:.9}
   .hero__desc{max-width:100%}
@@ -421,7 +423,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   .container{padding:0 16px}
   .header__inner{padding:0 16px;gap:12px}
   .hero__title{font-size:42px;letter-spacing:-.5px}
-  .hero__player-img{height:280px}
+  .hero__player-img{height:280px; top: 0px}
   .category__grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,120px)}
   .category__label{font-size:15px}
   .newsletter__title{font-size:30px}
@@ -431,4 +433,5 @@ button{cursor:pointer;border:none;background:none;font-family:inherit}
   .recent__featured{flex:0 0 140px}
   .recent__featured-img{height:180px}
   .articles__controls .slider-btn{width:32px;height:32px}
+      .hero__sidebar{margin-left: 1px;}
 }
